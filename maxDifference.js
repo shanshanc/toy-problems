@@ -1,29 +1,5 @@
 'use strict';
 
-const fs = require('fs');
-
-process.stdin.resume();
-process.stdin.setEncoding('utf-8');
-
-let inputString = '';
-let currentLine = 0;
-
-process.stdin.on('data', function(inputStdin) {
-    inputString += inputStdin;
-});
-
-process.stdin.on('end', function() {
-    inputString = inputString.split('\n');
-
-    main();
-});
-
-function readLine() {
-    return inputString[currentLine++];
-}
-
-
-
 /*
  * Complete the 'maxDifference' function below.
  *
@@ -50,6 +26,8 @@ function maxDifference(arr) {
 
 console.log(maxDifference([2,3,10,6,4,8,1]));
 console.log(maxDifference([7, 9, 5, 6, 3, 2]));
+console.log(maxDifference([50, 60, 100, 10, 70])); // 60
+
 /*
 Input : arr = {2, 3, 10, 6, 4, 8, 1}
 Output : 8
