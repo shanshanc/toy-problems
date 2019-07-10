@@ -1,0 +1,24 @@
+{
+  "name": "toy-problems",
+  "version": "1.0.0",
+  "description": "",
+  "main": "getMovies.js",
+  "dependencies": {
+    "node-fetch": "^2.6.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shanshanc/toy-problems.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/shanshanc/toy-problems/issues"
+  },
+  "homepage": "https://github.com/shanshanc/toy-problems#readme"
+}

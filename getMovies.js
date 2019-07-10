@@ -1,4 +1,4 @@
-const https = require('https');
+const fetch = require('node-fetch');
 
 function getMovieTitles(substr) {
     const BASE_URL = 'https://jsonmock.hackerrank.com/api/movies/search/?Title=';
@@ -7,46 +7,43 @@ function getMovieTitles(substr) {
     let url = `${BASE_URL}${movieName}&page=${pageNum}`;
     let titles = [];
 
-    https.get(url, res => {
-      res.setEncoding('utf8');
-      let body = '';
-
-      res.on('data', chunk => {
-        body += chunk;
-      });
-
-      res.on('end', () => {
-        // get the first page results
-        let json = JSON.parse(body);
-        json.data.forEach(movie => {
-          titles.push(movie.Title);
-        });
+    fetch(url)
+      .then(res => {
+        return res.json();
+      })
+      .then(json => {
+        // check total pages and get results of the first page
+        const total_pages = json.total_pages;
+        const data = json.data;
+        data.forEach(movie => titles.push(movie.Title));
         
-        // get the results of following pages
-        for (let i = 2; i <= json.total_pages; i++) {
-          url = `${BASE_URL}${movieName}&page=${i}`;
-          https.get(url, res => {
-            res.setEncoding('utf8');
-            let body = '';
-
-            res.on('data', chunk => {
-              body += chunk;
+        // handle additional pages
+        let promises = [];
+        if (total_pages > 1) {
+          for (let i = 2; i <= total_pages; i++) {
+            url = `${BASE_URL}${movieName}&page=${i}`;
+            promises.push(
+              fetch(url)
+                .then(res => res.json())
+                .then(json => json.data)
+                .catch(e => console.error(e))
+            );
+          }
+        }
+        
+        Promise.all(promises)
+          .then(data => {
+            const movies = data[0];
+            movies.forEach(movie => {
+              titles.push(movie.Title);
             });
 
-            res.on('end', () => {
-              let json = JSON.parse(body);
-              json.data.forEach(movie => {
-                titles.push(movie.Title);
-              });
-
-              // show results
-              console.log('titles: ', titles.sort());
-            }).on('error', e => console.error('page ', i, '. error: ', e));
+            console.log('titles: ', titles);
           })
-        }
-      });
-    }).on('error', e => console.error('error: ', e));
-
+          .catch(e => console.error(e));
+      })
+      .catch(error => console.error(error));
+    
 };
 
-console.log(getMovieTitles('Spiderman'));
+getMovieTitles('Spiderman');
