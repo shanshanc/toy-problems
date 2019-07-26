@@ -45,6 +45,23 @@ Did the output reveal `1 2 3 4`, if not please fix it.
 ```diff
 + Response 1-2
 + One approach could be turning off the deafult asynchronicity by setting the `async` field to be `false`.
++ Please refer to the script below.
+```
+
+```html
+<script>
+(function (i, max_i) {
+    for (;i < max_i; i+=1) {
+        $.ajax({
+            url: 'https://ajax.googleapis.com/ajax/libs/jquery/1.12.' + i + '/jquery.min.js',
+            success: function () {
+                console.log(i);
+            },
+            async: false
+        });
+    }
+})(1, 5);
+</script>
 ```
 
 
@@ -54,7 +71,9 @@ Why not just put this file to local ?
 
 ```diff
 + Response 1-3
-+ There are several adventages of using exernal JS file including size, maintenance, cache, etc. One big adventage if that popular JS files are hosted on Content Delivery Network, which can be a way of decrease server loading, increase serving efficiency, and reduce network latency (for end users).
++ There are several adventages of using exernal JS file including size, maintenance, cache, etc. 
++ One big adventage if that popular JS files are hosted on Content Delivery Network, which can be a way of 
++ decrease server loading, increase serving efficiency, and reduce network latency (for end users).
 ```
 
 # Question 2
@@ -74,7 +93,8 @@ another();  // welcome
 
 ```diff
 + Response 2
-+ Not sure if we're allowed to search on the Internet, but there is a pretty good compatibility script from Mozilla. Please find the updated version below.
++ Not sure if we're allowed to search on the Internet, but there is a pretty good compatibility script from Mozilla.
++ Please find the updated version below.
 
 + https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/bind#Browser_compatibility
 ```
